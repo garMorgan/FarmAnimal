@@ -1,0 +1,15 @@
+#include "CyberChicken.h"
+
+CyberChicken::CyberChicken()
+{
+	m_name = "Cyber Chicken";
+	m_sound = "Resistance is futile";
+}
+void CyberChicken::setCyberEggs(int eggs)
+{
+	m_eggs = eggs;
+}
+int CyberChicken::getCyberEggs() const
+{
+	return m_eggs;
+}

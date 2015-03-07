@@ -1,0 +1,176 @@
+/**
+*	@file : Stack.hpp
+*	@author :  Garion Morgan
+*	@date : 2015.3.4
+*	Purpose: Creating a stack to either pop, push, peek, print, and compare.
+*/
+template<typename T>
+Stack<T>::Stack()
+{
+	m_front = nullptr;
+	m_counter = 0;
+}
+template<typename T>
+Stack<T>::~Stack()
+{
+	while(!isEmpty())
+		{
+		pop();
+		}
+}
+template<typename T>
+bool Stack<T>::isEmpty() const
+{
+	if(m_counter==0)
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+void Stack<T>::push(const T newEntry)
+{	
+	Node<T>* temp = new Node<T>();
+	temp->setValue(newEntry);
+	if(isEmpty())
+		{
+		m_front=temp;
+		m_counter++;
+		}
+	else
+		{
+		temp->setNext(m_front);
+		m_front=temp;
+		m_counter++;
+		}
+}
+template<typename T>
+T Stack<T>::pop() throw(PreconditionViolationException)
+{
+	if(isEmpty())
+		{
+		throw(PreconditionViolationException(std::string("Exception: Pop attempted on an empty stack\n")));
+		}
+	else
+		{
+		Node<T>* temp;
+		T tempValue;
+		temp = m_front;
+		tempValue = temp->getValue();
+		m_front = m_front->getNext();
+		m_counter--;
+		delete temp;
+		return tempValue;
+		}	
+}
+template<typename T>
+T Stack<T>::peek() const throw(PreconditionViolationException)
+{
+	if(isEmpty())
+		{
+		throw(PreconditionViolationException(std::string("Exception: Peek attempted on an empty stack\n")));
+		}
+	else
+		{
+		return m_front->getValue();
+		}
+}
+template<typename T>
+int Stack<T>::size() const
+{
+	return m_counter;
+}
+template<typename T>
+void Stack<T>::print() const
+{
+	Node<T>* print;
+	print = m_front;
+	if(isEmpty())
+		{
+		std::cout << "Stack is empty" << std::endl;
+		}
+	else
+		{
+		while(print->getNext()!=nullptr)
+			{
+			std::cout << print->getValue() << ",";
+			print = print->getNext();
+			}
+		std::cout << print->getValue() << std::endl;
+		}
+}
+template<typename T>
+bool Stack<T>::operator< (const StackInterface<T>& rhs) const
+{
+	if(this->size() < rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+bool Stack<T>::operator<= (const StackInterface<T>& rhs) const
+{
+	if(this->size() <= rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+bool Stack<T>::operator> (const StackInterface<T>& rhs) const
+{
+	if(this->size() > rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+bool Stack<T>::operator>= (const StackInterface<T>& rhs) const
+{
+	if(this->size() >= rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+bool Stack<T>::operator== (const StackInterface<T>& rhs) const
+{
+	if(this->size() == rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
+template<typename T>
+bool Stack<T>::operator!= (const StackInterface<T>& rhs) const
+{
+	if(this->size() != rhs.size())
+		{
+		return true;
+		}
+	else
+		{
+		return false;
+		}
+}
